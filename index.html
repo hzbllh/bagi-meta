@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>META MATIK</title>
-  <meta name="description" content="META MATIK: Random number and direction generator for gaming">
+  <meta name="description" content="META MATIK: Random number, direction, and meta generator for gaming">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
@@ -59,6 +59,13 @@
     #resetBtn:hover {
       background: #d32f2f;
     }
+    #nextMetaBtn {
+      background: #0288d1;
+      color: #fff;
+    }
+    #nextMetaBtn:hover {
+      background: #03a9f4;
+    }
     #result {
       font-size: 2.5em;
       margin: 20px 0;
@@ -67,7 +74,19 @@
     }
     #history {
       font-size: 0.9em;
-      text-align: center;
+      text-align: left;
+      width: 100%;
+    }
+    #history ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    #history li {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 8px;
+      margin: 5px 0;
+      border-radius: 5px;
     }
     @keyframes fadeIn {
       to { opacity: 1; }
@@ -86,14 +105,19 @@
     <button onclick="generateNumber()">Generate Number!</button>
     <button onclick="generateDirection('leftright')">Kiri/Kanan</button>
     <button onclick="generateDirection('updown')">Atas/Bawah</button>
+    <button id="nextMetaBtn" onclick="generateMeta()">Next Meta</button>
     <button id="resetBtn" onclick="resetAll()">Reset</button>
     <div id="result">-</div>
-    <div id="history">History: None</div>
+    <div id="history"><ul><li>History: None</li></ul></div>
   </div>
 
   <script>
     let history = [];
-    
+    const metaSuggestions = [
+      'Hero: Ling', 'Hero: Fanny', 'Hero: Gusion',
+      'Strategy: Gank Top', 'Strategy: Push Mid', 'Strategy: Defend Base'
+    ];
+
     function generateNumber() {
       let min = parseInt(document.getElementById('min').value);
       let max = parseInt(document.getElementById('max').value);
@@ -107,11 +131,7 @@
       }
       let result = Math.floor(Math.random() * (max - min + 1)) + min;
       document.getElementById('result').innerText = result;
-      
-      // Simpan sejarah
-      history.unshift(result);
-      if (history.length > 5) history.pop();
-      document.getElementById('history').innerText = `History: ${history.join(', ')}`;
+      updateHistory(result);
     }
 
     function generateDirection(type) {
@@ -122,17 +142,28 @@
         result = Math.random() < 0.5 ? 'Atas' : 'Bawah';
       }
       document.getElementById('result').innerText = result;
-      
-      // Simpan sejarah
+      updateHistory(result);
+    }
+
+    function generateMeta() {
+      let result = metaSuggestions[Math.floor(Math.random() * metaSuggestions.length)];
+      document.getElementById('result').innerText = result;
+      updateHistory(`Meta: ${result}`);
+    }
+
+    function updateHistory(result) {
       history.unshift(result);
       if (history.length > 5) history.pop();
-      document.getElementById('history').innerText = `History: ${history.join(', ')}`;
+      let historyList = history.length > 0
+        ? history.map(item => `<li>${item}</li>`).join('')
+        : '<li>History: None</li>';
+      document.getElementById('history').innerHTML = `<ul>${historyList}</ul>`;
     }
 
     function resetAll() {
       history = [];
       document.getElementById('result').innerText = '-';
-      document.getElementById('history').innerText = 'History: None';
+      document.getElementById('history').innerHTML = '<ul><li>History: None</li></ul>';
       document.getElementById('min').value = '1';
       document.getElementById('max').value = '100';
     }
