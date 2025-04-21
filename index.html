@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Random Number & Direction Generator</title>
+  <title>META MATIK</title>
+  <meta name="description" content="META MATIK: Random number and direction generator for gaming">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
@@ -51,6 +52,13 @@
     button:hover {
       background: #ffca28;
     }
+    #resetBtn {
+      background: #b71c1c;
+      color: #fff;
+    }
+    #resetBtn:hover {
+      background: #d32f2f;
+    }
     #result {
       font-size: 2.5em;
       margin: 20px 0;
@@ -71,13 +79,14 @@
   </style>
 </head>
 <body>
-  <h1>Random Number & Direction Generator</h1>
+  <h1>META MATIK</h1>
   <div class="container">
     <input type="number" id="min" placeholder="Min Number" value="1">
     <input type="number" id="max" placeholder="Max Number" value="100">
     <button onclick="generateNumber()">Generate Number!</button>
     <button onclick="generateDirection('leftright')">Kiri/Kanan</button>
     <button onclick="generateDirection('updown')">Atas/Bawah</button>
+    <button id="resetBtn" onclick="resetAll()">Reset</button>
     <div id="result">-</div>
     <div id="history">History: None</div>
   </div>
@@ -118,6 +127,14 @@
       history.unshift(result);
       if (history.length > 5) history.pop();
       document.getElementById('history').innerText = `History: ${history.join(', ')}`;
+    }
+
+    function resetAll() {
+      history = [];
+      document.getElementById('result').innerText = '-';
+      document.getElementById('history').innerText = 'History: None';
+      document.getElementById('min').value = '1';
+      document.getElementById('max').value = '100';
     }
   </script>
 </body>
