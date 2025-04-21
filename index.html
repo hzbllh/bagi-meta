@@ -3,46 +3,121 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Random Number Generator</title>
+  <title>Random Number & Direction Generator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    body { 
-      background: #1a237e; 
-      color: #ffd700; 
-      font-family: Arial, sans-serif; 
-      display: flex; 
-      flex-direction: column; 
-      align-items: center; 
-      height: 100vh; 
-      margin: 0; 
+    body {
+      background: #1a237e;
+      color: #ffd700;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      box-sizing: border-box;
     }
-    input, button { 
-      padding: 10px; 
-      margin: 10px; 
-      font-size: 16px; 
+    h1 {
+      font-size: 2em;
+      text-align: center;
     }
-    #result { 
-      font-size: 2em; 
-      margin-top: 20px; 
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 400px;
+    }
+    input, button {
+      padding: 12px;
+      margin: 10px 0;
+      font-size: 1em;
+      width: 100%;
+      box-sizing: border-box;
+      border: none;
+      border-radius: 5px;
+    }
+    input {
+      background: #fff;
+      color: #1a237e;
+    }
+    button {
+      background: #ffd700;
+      color: #1a237e;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background: #ffca28;
+    }
+    #result {
+      font-size: 2.5em;
+      margin: 20px 0;
+      opacity: 0;
+      animation: fadeIn 0.5s forwards;
+    }
+    #history {
+      font-size: 0.9em;
+      text-align: center;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    @media (max-width: 600px) {
+      h1 { font-size: 1.5em; }
+      .container { padding: 15px; }
     }
   </style>
 </head>
 <body>
-  <h1>Random Number Generator</h1>
-  <input type="number" id="min" placeholder="Min Number" value="1">
-  <input type="number" id="max" placeholder="Max Number" value="100">
-  <button onclick="generate()">Generate!</button>
-  <div id="result">-</div>
+  <h1>Random Number & Direction Generator</h1>
+  <div class="container">
+    <input type="number" id="min" placeholder="Min Number" value="1">
+    <input type="number" id="max" placeholder="Max Number" value="100">
+    <button onclick="generateNumber()">Generate Number!</button>
+    <button onclick="generateDirection('leftright')">Kiri/Kanan</button>
+    <button onclick="generateDirection('updown')">Atas/Bawah</button>
+    <div id="result">-</div>
+    <div id="history">History: None</div>
+  </div>
 
   <script>
-    function generate() {
+    let history = [];
+    
+    function generateNumber() {
       let min = parseInt(document.getElementById('min').value);
       let max = parseInt(document.getElementById('max').value);
+      if (isNaN(min) || isNaN(max)) {
+        alert("Sila masukkan nombor yang sah!");
+        return;
+      }
       if (min >= max) {
         alert("Max harus lebih besar dari Min!");
         return;
       }
       let result = Math.floor(Math.random() * (max - min + 1)) + min;
       document.getElementById('result').innerText = result;
+      
+      // Simpan sejarah
+      history.unshift(result);
+      if (history.length > 5) history.pop();
+      document.getElementById('history').innerText = `History: ${history.join(', ')}`;
+    }
+
+    function generateDirection(type) {
+      let result;
+      if (type === 'leftright') {
+        result = Math.random() < 0.5 ? 'Kiri' : 'Kanan';
+      } else if (type === 'updown') {
+        result = Math.random() < 0.5 ? 'Atas' : 'Bawah';
+      }
+      document.getElementById('result').innerText = result;
+      
+      // Simpan sejarah
+      history.unshift(result);
+      if (history.length > 5) history.pop();
+      document.getElementById('history').innerText = `History: ${history.join(', ')}`;
     }
   </script>
 </body>
