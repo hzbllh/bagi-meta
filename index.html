@@ -29,6 +29,7 @@
     h1 img {
       height: 40px;
       width: auto;
+      cursor: pointer;
     }
     .container {
       background: rgba(255, 255, 255, 0.1);
@@ -100,7 +101,7 @@
 </head>
 <body>
   <h1>
-    <img src="https://raw.githubusercontent.com/hzbllh/bagi-meta/70dcdc46cbeee683de54b7b35b6f8800342b48d3/29eeb3cb-7a82-44c7-99df-d75f32d243ce_removalai_preview.png" alt="META MATIK Logo">
+    <img src="https://raw.githubusercontent.com/hzbllh/bagi-meta/70dcdc46cbeee683de54b7b35b6f8800342b48d3/29eeb3cb-7a82-44c7-99df-d75f32d243ce_removalai_preview.png" alt="META MATIK Logo" onclick="showPopup()">
     META MATIK
   </h1>
   <div class="container">
@@ -116,6 +117,10 @@
 
   <script>
     let history = [];
+
+    function showPopup() {
+      alert("KUMPAU KE TU");
+    }
 
     function generateNumber() {
       let min = parseInt(document.getElementById('min').value);
