@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Number Generator</title>
+  <style>
+    body { 
+      background: #1a237e; 
+      color: #ffd700; 
+      font-family: Arial, sans-serif; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      height: 100vh; 
+      margin: 0; 
+    }
+    input, button { 
+      padding: 10px; 
+      margin: 10px; 
+      font-size: 16px; 
+    }
+    #result { 
+      font-size: 2em; 
+      margin-top: 20px; 
+    }
+  </style>
+</head>
+<body>
+  <h1>Random Number Generator</h1>
+  <input type="number" id="min" placeholder="Min Number" value="1">
+  <input type="number" id="max" placeholder="Max Number" value="100">
+  <button onclick="generate()">Generate!</button>
+  <div id="result">-</div>
+
+  <script>
+    function generate() {
+      let min = parseInt(document.getElementById('min').value);
+      let max = parseInt(document.getElementById('max').value);
+      if (min >= max) {
+        alert("Max harus lebih besar dari Min!");
+        return;
+      }
+      let result = Math.floor(Math.random() * (max - min + 1)) + min;
+      document.getElementById('result').innerText = result;
+    }
+  </script>
+</body>
+</html>
