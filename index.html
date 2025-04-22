@@ -68,10 +68,11 @@
       background: #d32f2f;
     }
     #result {
-      font-size: 2.5em;
+      font-size: 2em;
       margin: 20px 0;
       opacity: 0;
       animation: fadeIn 0.5s forwards;
+      text-align: center;
     }
     #history {
       font-size: 0.9em;
@@ -96,6 +97,7 @@
       h1 { font-size: 1.5em; }
       h1 img { height: 30px; }
       .container { padding: 15px; }
+      #result { font-size: 1.5em; }
     }
   </style>
 </head>
@@ -121,32 +123,28 @@
     }
 
     function generate() {
-      const choice = Math.random();
-      let result, historyEntry;
-
-      if (choice < 0.333) {
-        // Generate nombor
-        let min = parseInt(document.getElementById('min').value);
-        let max = parseInt(document.getElementById('max').value);
-        if (isNaN(min) || isNaN(max)) {
-          alert("Sila masukkan nombor yang sah!");
-          return;
-        }
-        if (min >= max) {
-          alert("Max harus lebih besar dari Min!");
-          return;
-        }
-        result = Math.floor(Math.random() * (max - min + 1)) + min;
-        historyEntry = `Nombor: ${result}`;
-      } else if (choice < 0.666) {
-        // Generate kiri/kanan
-        result = Math.random() < 0.5 ? 'Kiri' : 'Kanan';
-        historyEntry = `Arah: ${result}`;
-      } else {
-        // Generate atas/bawah
-        result = Math.random() < 0.5 ? 'Atas' : 'Bawah';
-        historyEntry = `Arah: ${result}`;
+      // Nombor
+      let min = parseInt(document.getElementById('min').value);
+      let max = parseInt(document.getElementById('max').value);
+      if (isNaN(min) || isNaN(max)) {
+        alert("Sila masukkan nombor yang sah!");
+        return;
       }
+      if (min >= max) {
+        alert("Max harus lebih besar dari Min!");
+        return;
+      }
+      let number = Math.floor(Math.random() * (max - min + 1)) + min;
+
+      // Kiri/Kanan
+      let leftRight = Math.random() < 0.5 ? 'Kiri' : 'Kanan';
+
+      // Atas/Bawah
+      let upDown = Math.random() < 0.5 ? 'Atas' : 'Bawah';
+
+      // Gabung output
+      let result = `${number}, ${leftRight}, ${upDown}`;
+      let historyEntry = `Nombor: ${number}, Arah: ${leftRight}, ${upDown}`;
 
       document.getElementById('result').innerText = result;
       updateHistory(historyEntry);
