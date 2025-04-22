@@ -107,9 +107,7 @@
   <div class="container">
     <input type="number" id="min" placeholder="Min Number" value="1">
     <input type="number" id="max" placeholder="Max Number" value="100">
-    <button onclick="generateNumber()">Generate Number!</button>
-    <button onclick="generateDirection('leftright')">Kiri/Kanan</button>
-    <button onclick="generateDirection('updown')">Atas/Bawah</button>
+    <button onclick="generate()">Generate!</button>
     <button id="resetBtn" onclick="resetAll()">Reset</button>
     <div id="result">-</div>
     <div id="history"><ul><li>History: None</li></ul></div>
@@ -122,31 +120,36 @@
       alert("KUMPAU KE TU");
     }
 
-    function generateNumber() {
-      let min = parseInt(document.getElementById('min').value);
-      let max = parseInt(document.getElementById('max').value);
-      if (isNaN(min) || isNaN(max)) {
-        alert("Sila masukkan nombor yang sah!");
-        return;
-      }
-      if (min >= max) {
-        alert("Max harus lebih besar dari Min!");
-        return;
-      }
-      let result = Math.floor(Math.random() * (max - min + 1)) + min;
-      document.getElementById('result').innerText = result;
-      updateHistory(`Nombor: ${result}`);
-    }
+    function generate() {
+      const choice = Math.random();
+      let result, historyEntry;
 
-    function generateDirection(type) {
-      let result;
-      if (type === 'leftright') {
+      if (choice < 0.333) {
+        // Generate nombor
+        let min = parseInt(document.getElementById('min').value);
+        let max = parseInt(document.getElementById('max').value);
+        if (isNaN(min) || isNaN(max)) {
+          alert("Sila masukkan nombor yang sah!");
+          return;
+        }
+        if (min >= max) {
+          alert("Max harus lebih besar dari Min!");
+          return;
+        }
+        result = Math.floor(Math.random() * (max - min + 1)) + min;
+        historyEntry = `Nombor: ${result}`;
+      } else if (choice < 0.666) {
+        // Generate kiri/kanan
         result = Math.random() < 0.5 ? 'Kiri' : 'Kanan';
-      } else if (type === 'updown') {
+        historyEntry = `Arah: ${result}`;
+      } else {
+        // Generate atas/bawah
         result = Math.random() < 0.5 ? 'Atas' : 'Bawah';
+        historyEntry = `Arah: ${result}`;
       }
+
       document.getElementById('result').innerText = result;
-      updateHistory(`Arah: ${result}`);
+      updateHistory(historyEntry);
     }
 
     function updateHistory(result) {
