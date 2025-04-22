@@ -135,11 +135,15 @@
     <div id="result">-</div>
     <div id="history"><ul><li>History: None</li></ul></div>
   </div>
+  <audio id="popupSound" src="https://freesound.org/data/previews/320/320147_5260872-lq.mp3"></audio>
 
   <script>
     let history = [];
 
     function showPopup() {
+      document.getElementById('popupSound').play().catch(function(error) {
+        console.log("Audio play failed:", error);
+      });
       alert("KUMPAU KE TU");
     }
 
