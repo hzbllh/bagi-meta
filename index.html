@@ -24,6 +24,11 @@
       text-align: center;
       padding: 50px 20px;
     }
+    .hero img {
+      max-width: 200px;
+      height: auto;
+      margin-bottom: 20px;
+    }
     .hero h1 {
       font-size: 2.5em;
       margin: 0;
@@ -40,7 +45,11 @@
       font-size: 1em;
       font-weight: bold;
       cursor: pointer;
-      margin-top: 20px;
+      margin: 10px 0;
+      display: block;
+      width: 200px;
+      margin-left: auto;
+      margin-right: auto;
     }
     .hero button:hover {
       background: #ffca28;
@@ -55,16 +64,19 @@
       to { opacity: 1; }
     }
     @media (max-width: 600px) {
+      .hero img { max-width: 150px; }
       .hero h1 { font-size: 1.8em; }
-      .hero button { padding: 10px 20px; }
+      .hero button { padding: 10px 20px; width: 150px; }
       #footer { font-size: 0.8em; }
     }
   </style>
 </head>
 <body>
   <section class="hero">
-    <h1>Selamat Datang ke META MATIK</h1>
-    <a href="generator.html"><button>Mulakan Generator</button></a>
+    <img src="https://raw.githubusercontent.com/hzbllh/bagi-meta/2f3691f71735efe80b4212706475c1c133afa2b2/IMG-20250302-WA0002-removebg-preview.png" alt="ChiiDy Logo">
+    <h1>ChiiDy sdn. bhd.</h1>
+    <a href="generator.html"><button>Meta Matik</button></a>
+    <a href="ranking.html"><button>Ranking</button></a>
   </section>
   <div id="footer">SEMOGA NISMA NISMA</div>
 </body>
