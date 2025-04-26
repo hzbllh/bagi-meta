@@ -1,1 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>META MATIK - Generator</title>
+  <meta name="description" content="META MATIK: Random number and direction generator for gaming">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #1a237e;
+      color: #ffd700;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    header {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px 20px;
+      width: 100%;
+      text-align: center;
+    }
+    header nav a {
+      color: #ffd700;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    header nav a:hover {
+      color: #ffca28;
+    }
+    h1 {
+      font-size: 2em;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    h1 img {
+      height: 40px;
+      width: auto;
+      cursor: pointer;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 400px;
+    }
+    input[type="number"], button {
+      padding: 12px;
+      margin: 10px 0;
+      font-size: 1em;
+      width: 100%;
+      box-sizing: border-box;
+      border: none;
+      border-radius: 5px;
+    }
+    input[type="number"] {
+      background: #fff;
+      color: #1a237e;
+    }
+    button {
+      background: #ffd700;
+      color: #1a237e;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background: #ffca28;
+    }
+    #resetBtn {
+      background: #b71c1c;
+      color: #fff;
+    }
+    #resetBtn:hover {
+      background: #d32f2f;
+    }
+    .checkbox-container {
+      display: flex;
+      flex-direction: column;
+      margin: 10px 0;
+    }
+    .checkbox-container label {
+      color: #ffd700;
+      font-size: 0.9em;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+    #result {
+      font-size: 2em;
+      margin: 20px 0;
+      opacity: 0;
+      animation: fadeIn 0.5s forwards;
+      text-align: center;
+    }
+    #history {
+      font-size: 0.9em;
+      text-align: left;
+      width: 100%;
+    }
+    #history ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    #history li {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 8px;
+      margin: 5px 0;
+      border-radius: 5px;
+    }
+    #footer {
+      margin-top: 20px;
+      font-size: 1em;
+      color: #ffd700;
+      text-align: center;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    @media (max-width: 600px) {
+      h1 { font-size: 1.5em; }
+      h1 img { height: 30px; }
+      .container { padding: 15px; }
+      #result { font-size: 1.5em; }
+      #footer { font-size: 0.8em; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="generator.html">Generator</a>
+    </nav>
+  </header>
+  <h1>
+    <img src="https://raw.githubusercontent.com/hzbllh/bagi-meta/70dcdc46cbeee683de54b7b35b6f8800342b48d3/29eeb3cb-7a82-44c7-99df-d75f32d243ce_removalai_preview.png" alt="META MATIK Logo" onclick="showPopup()">
+    META MATIK
+  </h1>
+  <div class="container">
+    <input type="number" id="min" placeholder="Min Number" value="1">
+    <input type="number" id="max" placeholder="Max Number" value="30">
+    <div class="checkbox-container">
+      <label><input type="checkbox" id="leftRight" checked> Kiri/Kanan</label>
+      <label><input type="checkbox" id="upDown" checked> Atas/Bawah</label>
+    </div>
+    <button onclick="generate()">Generate!</button>
+    <button id="resetBtn" onclick="resetAll()">Reset</button>
+    <div id="result">-</div>
+    <div id="history"><ul><li>History: None</li></ul></div>
+  </div>
+  <div id="footer">SEMOGA NISMA NISMA</div>
+  <audio id="popupSound" src="https://freesound.org/data/previews/258/258111_2046502-lq.mp3"></audio>
 
+  <script>
+    let history = [];
+
+    function showPopup() {
+      document.getElementById('popupSound').play().catch(function(error) {
+        console.log("Audio play failed:", error);
+      });
+      alert("KUMPAU KE TU");
+    }
+
+    function generate() {
+      let min = parseInt(document.getElementById('min').value);
+      let max = parseInt(document.getElementById('max').value);
+      if (isNaN(min) || isNaN(max)) {
+        alert("Sila masukkan nombor yang sah!");
+        return;
+      }
+      if (min >= max) {
+        alert("Max harus lebih besar dari Min!");
+        return;
+      }
+      let number = Math.floor(Math.random() * (max - min + 1)) + min;
+
+      let leftRight = document.getElementById('leftRight').checked
+        ? Math.random() < 0.5 ? 'Kiri' : 'Kanan'
+        : null;
+
+      let upDown = document.getElementById('upDown').checked
+        ? Math.random() < 0.5 ? 'Atas' : 'Bawah'
+        : null;
+
+      let resultParts = [number];
+      let historyParts = [`Nombor: ${number}`];
+      if (leftRight) {
+        resultParts.push(leftRight);
+        historyParts.push(`Arah: ${leftRight}`);
+      }
+      if (upDown) {
+        resultParts.push(upDown);
+        historyParts.push(upDown);
+      }
+
+      let result = resultParts.join(', ');
+      let historyEntry = historyParts.join(', ');
+
+      document.getElementById('result').innerText = result;
+      updateHistory(historyEntry);
+    }
+
+    function updateHistory(result) {
+      history.unshift(result);
+      if (history.length > 5) history.pop();
+      let historyList = history.length > 0
+        ? history.map(item => `<li>${item}</li>`).join('')
+        : '<li>History: None</li>';
+      document.getElementById('history').innerHTML = `<ul>${historyList}</ul>`;
+    }
+
+    function resetAll() {
+      history = [];
+      document.getElementById('result').innerText = '-';
+      document.getElementById('history').innerHTML = '<ul><li>History: None</li></ul>';
+      document.getElementById('min').value = '1';
+      document.getElementById('max').value = '30';
+      document.getElementById('leftRight').checked = true;
+      document.getElementById('upDown').checked = true;
+    }
+  </script>
+</body>
+</html>
