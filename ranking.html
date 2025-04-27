@@ -3,11 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Susun Nombor</title>
+    <title>META MATIK - Ranking</title>
+    <meta name="description" content="META MATIK: Sort and rank numbers with custom highlights">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #1a237e;
+            color: #ffd700;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        h2 {
+            font-size: 2em;
+            text-align: center;
+            margin: 0;
+            color: #ffd700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        p, label {
+            font-size: 1em;
+            margin: 10px 0;
+        }
+        textarea, input[type="text"], select {
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 1em;
+            width: 100%;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 5px;
+            background: #fff;
+            color: #1a237e;
+        }
+        button {
+            background: #ffd700;
+            color: #1a237e;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 1em;
+            width: 100%;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #ffca28;
+        }
+        #backBtn {
+            background: #ffd700;
+            color: #1a237e;
+            margin-top: 20px;
+        }
+        #backBtn:hover {
+            background: #ffca28;
+        }
+        #result {
+            margin: 20px 0;
+            text-align: left;
+        }
+        #result h3 {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+        #result ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        #result li {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+        #result p {
+            margin: 10px 0;
+        }
+        #footer {
+            margin-top: 20px;
+            font-size: 1em;
+            color: #ffd700;
+            text-align: center;
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        @media (max-width: 600px) {
+            h2 { font-size: 1.5em; }
+            .container { padding: 15px; }
+            textarea, input[type="text"], select, button { font-size: 0.9em; }
+            #footer { font-size: 0.8em; }
+        }
+    </style>
 </head>
 <body>
-    <div>
-        <h2>Susun Nombor</h2>
+    <h2>Susun Nombor</h2>
+    <div class="container">
         <p>Masukkan nombor (satu setiap baris):</p>
         <textarea id="inputNumbers" rows="5" cols="30" placeholder="Contoh:
 615
@@ -27,6 +135,8 @@
         <button onclick="sortNumbers()">Susun Nombor</button>
         <div id="result"></div>
     </div>
+    <a href="index.html"><button id="backBtn">Kembali ke Halaman Utama</button></a>
+    <div id="footer">SEMOGA NISMA NISMA</div>
 
     <script>
         function sortNumbers() {
@@ -38,7 +148,7 @@
                                 .filter(num => !isNaN(num));
 
             if (numbers.length === 0) {
-                document.getElementById('result').innerHTML = '<p>Sila masukkan sekurang-kurangnya satu nombor yang sah.</p>';
+                document.getElementById('result').innerHTML = '<p style="color: #ffca28;">Sila masukkan sekurang-kurangnya satu nombor yang sah.</p>';
                 return;
             }
 
@@ -54,13 +164,13 @@
             let errorMessage = '';
             const invalidPositions = highlightPositions.filter(pos => pos < 1 || pos > sortedNumbers.length);
             if (invalidPositions.length > 0) {
-                errorMessage = `<p style="color: red;">Kedudukan tidak sah: ${invalidPositions.join(', ')}. Sila pilih antara 1 hingga ${sortedNumbers.length}.</p>`;
+                errorMessage = `<p style="color: #ffca28;">Kedudukan tidak sah: ${invalidPositions.join(', ')}. Sila pilih antara 1 hingga ${sortedNumbers.length}.</p>`;
             }
 
             const numberList = sortedNumbers.map((num, index) => {
                 const position = index + 1;
                 const isHighlighted = highlightPositions.includes(position);
-                return `<li style="${isHighlighted ? 'font-weight: bold; color: red;' : ''}">${num}${isHighlighted ? ' (Kedudukan ' + position + ')' : ''}</li>`;
+                return `<li style="${isHighlighted ? 'font-weight: bold; color: #ffca28;' : ''}">${num}${isHighlighted ? ' (Kedudukan ' + position + ')' : ''}</li>`;
             }).join('');
 
             const title = sortOrder === 'ascending' 
