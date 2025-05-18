@@ -1,1 +1,290 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetris Mobile - META MATIK</title>
+    <meta name="description" content="Tetris Mobile by META MATIK: Classic game with a twist">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #1a237e;
+            color: #ffd700;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #gameCanvas {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border: 2px solid #ffd700;
+            touch-action: none;
+            opacity: 0;
+            animation: fadeIn 1s forwards 0.2s;
+        }
+        #score {
+            font-size: 20px;
+            margin: 10px 0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+        .controls {
+            display: grid;
+            grid-template-areas:
+                ". rotate ."
+                "left down right";
+            gap: 10px;
+            margin-top: 10px;
+            opacity: 0;
+            animation: fadeIn 1s forwards 0.4s;
+        }
+        .control-btn {
+            background: #ffd700;
+            color: #1a237e;
+            border: none;
+            padding: 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 60px;
+            height: 60px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        .control-btn:hover {
+            background: #ffca28;
+        }
+        #rotate { grid-area: rotate; }
+        #down { grid-area: down; }
+        #left { grid-area: left; }
+        #right { grid-area: right; }
+        a {
+            color: #ffd700;
+            text-decoration: none;
+            margin-top: 10px;
+            display: inline-block;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            animation: fadeIn 1s forwards 0.6s;
+        }
+        #footer {
+            margin-top: 20px;
+            font-size: 1em;
+            color: #ffd700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 1s forwards 0.8s;
+        }
+        .social-links {
+            margin-top: 10px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        .social-links img {
+            width: 24px;
+            height: 24px;
+            transition: transform 0.3s;
+        }
+        .social-links img:hover {
+            transform: scale(1.2);
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        @media (max-width: 600px) {
+            #score { font-size: 16px; }
+            .control-btn { width: 50px; height: 50px; font-size: 14px; padding: 12px; }
+            #footer { font-size: 0.8em; }
+            .social-links img { width: 20px; height: 20px; }
+        }
+        @media (max-width: 400px) {
+            #score { font-size: 14px; }
+            .control-btn { width: 40px; height: 40px; font-size: 12px; padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="score">Skor: 0</div>
+    <canvas id="gameCanvas" width="300" height="600"></canvas>
+    <div class="controls">
+        <button id="rotate" class="control-btn">↻</button>
+        <button id="left" class="control-btn">←</button>
+        <button id="down" class="control-btn">↓</button>
+        <button id="right" class="control-btn">→</button>
+    </div>
+    <a href="index.html">Kembali ke Laman Utama</a>
+    <div id="footer">
+        SEMOGA NISMA NISMA
+        <div class="social-links">
+            <a href="https://www.tiktok.com/@kc._.collecti0n?_t=ZS-8w5A2jjiboI&_r=1" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok"></a>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const gridSize = 30;
+        const cols = 10;
+        const rows = 20;
+        let board = Array(rows).fill().map(() => Array(cols).fill(0));
+        let score = 0;
+        let currentPiece = null;
+        let gameOver = false;
 
+        // Bentuk tetromino (I, O, T, L, J, S, Z)
+        const pieces = [
+            [[1, 1, 1, 1]], // I
+            [[1, 1], [1, 1]], // O
+            [[0, 1, 0], [1, 1, 1]], // T
+            [[1, 0, 0], [1, 1, 1]], // L
+            [[0, 0, 1], [1, 1, 1]], // J
+            [[0, 1, 1], [1, 1, 0]], // S
+            [[1, 1, 0], [0, 1, 1]] // Z
+        ];
+        const colors = ['#00f', '#ff0', '#f0f', '#ffa500', '#00f', '#0f0', '#f00'];
+
+        function createPiece() {
+            const index = Math.floor(Math.random() * pieces.length);
+            return { shape: pieces[index], color: colors[index], x: Math.floor(cols / 2) - 1, y: 0 };
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // Lukis papan
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    if (board[y][x]) {
+                        ctx.fillStyle = board[y][x];
+                        ctx.fillRect(x * gridSize, y * gridSize, gridSize - 1, gridSize - 1);
+                    }
+                }
+            }
+            // Lukis blok semasa
+            if (currentPiece) {
+                currentPiece.shape.forEach((row, dy) => {
+                    row.forEach((value, dx) => {
+                        if (value) {
+                            ctx.fillStyle = currentPiece.color;
+                            ctx.fillRect((currentPiece.x + dx) * gridSize, (currentPiece.y + dy) * gridSize, gridSize - 1, gridSize - 1);
+                        }
+                    });
+                });
+            }
+            document.getElementById('score').textContent = `Skor: ${score}`;
+        }
+
+        function collide(piece, offsetX = 0, offsetY = 0) {
+            return piece.shape.some((row, dy) => {
+                return row.some((value, dx) => {
+                    if (value) {
+                        let x = piece.x + dx + offsetX;
+                        let y = piece.y + dy + offsetY;
+                        return x < 0 || x >= cols || y >= rows || (y >= 0 && board[y][x]);
+                    }
+                    return false;
+                });
+            });
+        }
+
+        function merge() {
+            currentPiece.shape.forEach((row, dy) => {
+                row.forEach((value, dx) => {
+                    if (value) {
+                        board[currentPiece.y + dy][currentPiece.x + dx] = currentPiece.color;
+                    }
+                });
+            });
+        }
+
+        function clearLines() {
+            let lines = 0;
+            for (let y = rows - 1; y >= 0; y--) {
+                if (board[y].every(cell => cell)) {
+                    board.splice(y, 1);
+                    board.unshift(Array(cols).fill(0));
+                    lines++;
+                }
+            }
+            if (lines > 0) {
+                score += lines * 100;
+                confetti({ particleCount: 50, spread: 50, origin: { y: 0.6 } });
+            }
+        }
+
+        function rotatePiece() {
+            const newShape = currentPiece.shape[0].map((_, i) =>
+                currentPiece.shape.map(row => row[i]).reverse()
+            );
+            const tempShape = currentPiece.shape;
+            currentPiece.shape = newShape;
+            if (collide(currentPiece)) {
+                currentPiece.shape = tempShape;
+            }
+        }
+
+        function update() {
+            if (gameOver) return;
+            if (!currentPiece) {
+                currentPiece = createPiece();
+                if (collide(currentPiece)) {
+                    alert('Game Over! Skor: ' + score);
+                    localStorage.setItem('highScore', Math.max(score, localStorage.getItem('highScore') || 0));
+                    board = Array(rows).fill().map(() => Array(cols).fill(0));
+                    score = 0;
+                    gameOver = true;
+                    return;
+                }
+            }
+            if (!collide(currentPiece, 0, 1)) {
+                currentPiece.y++;
+            } else {
+                merge();
+                clearLines();
+                currentPiece = null;
+            }
+            draw();
+        }
+
+        // Kawalan sentuh
+        document.getElementById('left').addEventListener('click', () => {
+            if (!collide(currentPiece, -1, 0)) currentPiece.x--;
+        });
+        document.getElementById('right').addEventListener('click', () => {
+            if (!collide(currentPiece, 1, 0)) currentPiece.x++;
+        });
+        document.getElementById('down').addEventListener('click', () => {
+            if (!collide(currentPiece, 0, 1)) currentPiece.y++;
+        });
+        document.getElementById('rotate').addEventListener('click', rotatePiece);
+
+        // Sokongan kekunci untuk ujian
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' && !collide(currentPiece, -1, 0)) currentPiece.x--;
+            else if (e.key === 'ArrowRight' && !collide(currentPiece, 1, 0)) currentPiece.x++;
+            else if (e.key === 'ArrowDown' && !collide(currentPiece, 0, 1)) currentPiece.y++;
+            else if (e.key === 'ArrowUp') rotatePiece();
+        });
+
+        // Laraskan saiz kanvas
+        function resizeCanvas() {
+            const size = Math.min(window.innerWidth * 0.8, 300);
+            canvas.width = size;
+            canvas.height = size * 2;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        setInterval(update, 1000); // Jatuh setiap 1 saat
+    </script>
+</body>
+</html>
