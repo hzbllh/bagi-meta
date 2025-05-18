@@ -63,6 +63,7 @@
       color: #1a237e;
       cursor: pointer;
       font-weight: bold;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
     }
     button:hover {
       background: #ffca28;
@@ -179,6 +180,7 @@
     <div class="checkbox-container">
       <label><input type="checkbox" id="leftRight" checked> Kiri/Kanan</label>
       <label><input type="checkbox" id="upDown" checked> Atas/Bawah</label>
+      <label><input type="checkbox" id="color" checked> Rumah Sukan</label>
     </div>
     <button onclick="generate()">Generate!</button>
     <button id="resetBtn" onclick="resetAll()">Reset</button>
@@ -220,6 +222,10 @@
       let upDown = document.getElementById('upDown').checked
         ? Math.random() < 0.5 ? 'Atas' : 'Bawah'
         : null;
+      const colors = ['Merah', 'Biru', 'Hijau', 'Kuning'];
+      let color = document.getElementById('color').checked
+        ? colors[Math.floor(Math.random() * colors.length)]
+        : null;
       let resultParts = [number];
       let historyParts = [`Nombor: ${number}`];
       if (leftRight) {
@@ -229,6 +235,10 @@
       if (upDown) {
         resultParts.push(upDown);
         historyParts.push(upDown);
+      }
+      if (color) {
+        resultParts.push(color);
+        historyParts.push(`Warna: ${color}`);
       }
       let result = resultParts.join(', ');
       let historyEntry = historyParts.join(', ');
@@ -251,6 +261,7 @@
       document.getElementById('max').value = '30';
       document.getElementById('leftRight').checked = true;
       document.getElementById('upDown').checked = true;
+      document.getElementById('color').checked = true;
     }
   </script>
 </body>
