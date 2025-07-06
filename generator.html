@@ -269,7 +269,7 @@
       let historyList = history.length > 0
         ? history.map(item => `<li>${item}</li>`).join('')
         : '<li>History: None</li>';
-      document.getElementById('history').innerHTML = `<ul>${historyList}</ul>';
+      document.getElementById('history').innerHTML = `<ul>${historyList}</ul>`;
     }
     function resetAll() {
       history = [];
