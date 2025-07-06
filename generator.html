@@ -12,22 +12,22 @@
       --bg: #1a237e;
       --accent: #ffd700;
       --hover: #ffca28;
-      --text: #ffffff; /* Tambah warna teks putih */
+      --text: #ffffff;
     }
     body {
       margin: 0;
       padding: 0;
       font-family: 'Poppins', sans-serif;
       min-height: 100vh;
-      overflow-x: hidden;
+      overflow-x: hidden; /* Tambah untuk buang garisan putih horizontal */
       display: flex;
       flex-direction: column;
       align-items: center;
     }
     #particles-js {
       position: fixed;
-      width: 100%;
-      height: 100%;
+      width: 100vw; /* Pastikan cover lebar skrin */
+      height: 100vh; /* Pastikan cover tinggi skrin */
       background: linear-gradient(135deg, #1a237e, #4a148c);
       background-size: 200% 200%;
       animation: gradientShift 10s ease infinite;
@@ -37,18 +37,18 @@
       50% { background-position: 100% 100%; }
     }
     h1 {
-      font-size: 2em;
+      font-size: 2.5em; /* Besarkan tulisan META MATIK */
       text-align: center;
       display: flex;
       align-items: center;
       gap: 10px;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-      color: var(--text); /* Tukar warna teks kepada putih */
+      color: var(--text);
       animation: fadeIn 1s forwards;
       margin: 20px 0;
     }
     h1 img {
-      height: 40px;
+      height: 50px; /* Besarkan logo */
       width: auto;
       cursor: pointer;
       animation: fadeIn 1s 0.2s forwards;
@@ -111,7 +111,7 @@
       margin: 10px 0;
     }
     .checkbox-container label {
-      color: var(--text); /* Tukar warna label checkbox kepada putih */
+      color: var(--text);
       font-size: 0.9em;
       display: flex;
       align-items: center;
@@ -126,7 +126,7 @@
     #result {
       font-size: 2em;
       margin: 20px 0;
-      color: var(--text); /* Tukar warna output generate kepada putih */
+      color: var(--text);
       animation: fadeIn 0.5s 0.5s forwards;
       text-align: center;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -137,7 +137,7 @@
       width: 100%;
       max-height: 150px;
       overflow-y: auto;
-      color: var(--text); /* Tukar warna history kepada putih */
+      color: var(--text);
     }
     #history ul {
       list-style: none;
@@ -176,16 +176,16 @@
       to { opacity: 1; }
     }
     @media (max-width: 600px) {
-      h1 { font-size: 1.3em; }
-      h1 img { height: 30px; }
+      h1 { font-size: 1.5em; } /* Adjust saiz tulisan pada mobile */
+      h1 img { height: 35px; } /* Adjust saiz logo pada mobile */
       .container { padding: 15px; }
       #result { font-size: 1.5em; }
       #footer { font-size: 0.8em; }
       .social-links img { width: 20px; height: 20px; }
     }
     @media (max-width: 400px) {
-      h1 { font-size: 1em; }
-      h1 img { height: 25px; }
+      h1 { font-size: 1.2em; } /* Adjust saiz tulisan pada mobile kecil */
+      h1 img { height: 30px; } /* Adjust saiz logo pada mobile kecil */
       #result { font-size: 1.2em; }
     }
   </style>
