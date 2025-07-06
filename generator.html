@@ -19,25 +19,29 @@
       padding: 0;
       font-family: 'Poppins', sans-serif;
       min-height: 100vh;
-      overflow-x: hidden; /* Tambah untuk buang garisan putih horizontal */
+      overflow-x: hidden; /* Kekal untuk buang overflow */
       display: flex;
       flex-direction: column;
       align-items: center;
+      width: 100vw; /* Pastikan body penuh lebar skrin */
     }
     #particles-js {
       position: fixed;
-      width: 100vw; /* Pastikan cover lebar skrin */
-      height: 100vh; /* Pastikan cover tinggi skrin */
+      top: 0;
+      left: 0;
+      width: 100vw; /* Pastikan cover lebar penuh */
+      height: 100vh; /* Pastikan cover tinggi penuh */
       background: linear-gradient(135deg, #1a237e, #4a148c);
       background-size: 200% 200%;
       animation: gradientShift 10s ease infinite;
+      z-index: -1; /* Letak di belakang semua elemen */
     }
     @keyframes gradientShift {
       0%, 100% { background-position: 0% 0%; }
       50% { background-position: 100% 100%; }
     }
     h1 {
-      font-size: 2.5em; /* Besarkan tulisan META MATIK */
+      font-size: 2.5em; /* Kekal besar */
       text-align: center;
       display: flex;
       align-items: center;
@@ -48,7 +52,7 @@
       margin: 20px 0;
     }
     h1 img {
-      height: 50px; /* Besarkan logo */
+      height: 50px; /* Kekal besar */
       width: auto;
       cursor: pointer;
       animation: fadeIn 1s 0.2s forwards;
@@ -61,6 +65,7 @@
       max-width: 400px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
       animation: fadeIn 1s 0.4s forwards;
+      box-sizing: border-box; /* Pastikan padding tak tambah lebar */
     }
     input[type="number"], button {
       padding: 12px;
@@ -158,6 +163,7 @@
       color: var(--accent);
       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
       animation: fadeIn 1s 0.8s forwards;
+      box-sizing: border-box; /* Pastikan padding tak tambah lebar */
     }
     .social-links {
       margin-top: 10px;
@@ -176,16 +182,16 @@
       to { opacity: 1; }
     }
     @media (max-width: 600px) {
-      h1 { font-size: 1.5em; } /* Adjust saiz tulisan pada mobile */
-      h1 img { height: 35px; } /* Adjust saiz logo pada mobile */
+      h1 { font-size: 1.5em; }
+      h1 img { height: 35px; }
       .container { padding: 15px; }
       #result { font-size: 1.5em; }
       #footer { font-size: 0.8em; }
       .social-links img { width: 20px; height: 20px; }
     }
     @media (max-width: 400px) {
-      h1 { font-size: 1.2em; } /* Adjust saiz tulisan pada mobile kecil */
-      h1 img { height: 30px; } /* Adjust saiz logo pada mobile kecil */
+      h1 { font-size: 1.2em; }
+      h1 img { height: 30px; }
       #result { font-size: 1.2em; }
     }
   </style>
