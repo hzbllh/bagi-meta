@@ -6,18 +6,34 @@
   <title>META MATIK - Generator</title>
   <meta name="description" content="META MATIK: Random number and direction generator for gaming">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js">
   <style>
+    :root {
+      --bg: #1a237e;
+      --accent: #ffd700;
+      --hover: #ffca28;
+    }
     body {
-      background: #1a237e;
-      color: #ffd700;
+      margin: 0;
+      padding: 0;
       font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      padding: 20px;
-      box-sizing: border-box;
+    }
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #1a237e, #4a148c);
+      background-size: 200% 200%;
+      animation: gradientShift 10s ease infinite;
+    }
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 0%; }
+      50% { background-position: 100% 100%; }
     }
     h1 {
       font-size: 2em;
@@ -26,24 +42,23 @@
       align-items: center;
       gap: 10px;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-      opacity: 0;
       animation: fadeIn 1s forwards;
+      margin: 20px 0;
     }
     h1 img {
       height: 40px;
       width: auto;
       cursor: pointer;
-      opacity: 0;
-      animation: fadeIn 1s forwards 0.2s;
+      animation: fadeIn 1s 0.2s forwards;
     }
     .container {
       background: rgba(255, 255, 255, 0.1);
       padding: 20px;
-      border-radius: 10px;
+      border-radius: 15px;
       width: 100%;
       max-width: 400px;
-      opacity: 0;
-      animation: fadeIn 1s forwards 0.4s;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 1s 0.4s forwards;
     }
     input[type="number"], button {
       padding: 12px;
@@ -53,20 +68,22 @@
       box-sizing: border-box;
       border: none;
       border-radius: 5px;
+      transition: all 0.3s;
     }
     input[type="number"] {
       background: #fff;
-      color: #1a237e;
+      color: var(--bg);
     }
     button {
-      background: #ffd700;
-      color: #1a237e;
+      background: var(--accent);
+      color: var(--bg);
       cursor: pointer;
       font-weight: bold;
       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
     }
     button:hover {
-      background: #ffca28;
+      background: var(--hover);
+      transform: translateY(-2px);
     }
     #resetBtn {
       background: #b71c1c;
@@ -74,16 +91,17 @@
     }
     #resetBtn:hover {
       background: #d32f2f;
+      transform: translateY(-2px);
     }
     #backBtn {
-      background: #ffd700;
-      color: #1a237e;
+      background: var(--accent);
+      color: var(--bg);
       margin-top: 20px;
-      opacity: 0;
-      animation: fadeIn 1s forwards 0.6s;
+      animation: fadeIn 1s 0.6s forwards;
     }
     #backBtn:hover {
-      background: #ffca28;
+      background: var(--hover);
+      transform: translateY(-2px);
     }
     .checkbox-container {
       display: flex;
@@ -91,7 +109,7 @@
       margin: 10px 0;
     }
     .checkbox-container label {
-      color: #ffd700;
+      color: var(--accent);
       font-size: 0.9em;
       display: flex;
       align-items: center;
@@ -106,8 +124,7 @@
     #result {
       font-size: 2em;
       margin: 20px 0;
-      opacity: 0;
-      animation: fadeIn 0.5s forwards;
+      animation: fadeIn 0.5s 0.5s forwards;
       text-align: center;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
@@ -115,6 +132,8 @@
       font-size: 0.9em;
       text-align: left;
       width: 100%;
+      max-height: 150px;
+      overflow-y: auto;
     }
     #history ul {
       list-style: none;
@@ -129,13 +148,12 @@
       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
     }
     #footer {
-      margin-top: 20px;
-      font-size: 1em;
-      color: #ffd700;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+      margin-top: auto;
+      padding: 20px;
       text-align: center;
-      opacity: 0;
-      animation: fadeIn 1s forwards 0.8s;
+      color: var(--accent);
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 1s 0.8s forwards;
     }
     .social-links {
       margin-top: 10px;
@@ -148,10 +166,9 @@
       height: 24px;
       transition: transform 0.3s;
     }
-    .social-links img:hover {
-      transform: scale(1.2);
-    }
+    .social-links img:hover { transform: scale(1.2); }
     @keyframes fadeIn {
+      from { opacity: 0; }
       to { opacity: 1; }
     }
     @media (max-width: 600px) {
@@ -170,8 +187,9 @@
   </style>
 </head>
 <body>
+  <div id="particles-js"></div>
   <h1>
-    <img src="https://raw.githubusercontent.com/hzbllh/bagi-meta/2f3691f71735efe80b4212706475c1c133afa2b2/IMG-20250302-WA0002-removebg-preview.png" alt="META MATIK Logo" onclick="showPopup()">
+    <img src="https://raw.githubusercontent.com/hzbllh/bagi-meta/refs/heads/main/a666a618-e5e2-49ff-a104-b18e34af2fe5_removalai_preview.png" alt="META MATIK Logo" onclick="showPopup()">
     META MATIK
   </h1>
   <div class="container">
@@ -251,7 +269,7 @@
       let historyList = history.length > 0
         ? history.map(item => `<li>${item}</li>`).join('')
         : '<li>History: None</li>';
-      document.getElementById('history').innerHTML = `<ul>${historyList}</ul>`;
+      document.getElementById('history').innerHTML = `<ul>${historyList}</ul>';
     }
     function resetAll() {
       history = [];
@@ -263,6 +281,20 @@
       document.getElementById('upDown').checked = true;
       document.getElementById('color').checked = true;
     }
+    particlesJS({
+      particles: {
+        number: { value: 50, density: { enable: true, value_area: 800 } },
+        color: { value: "#ffd700" },
+        shape: { type: "circle" },
+        opacity: { value: 0.5, random: true },
+        size: { value: 3, random: true },
+        move: { enable: true, speed: 2, direction: "none", random: true }
+      },
+      interactivity: {
+        events: { onhover: { enable: true, mode: "repulse" } },
+        modes: { repulse: { distance: 100, duration: 0.4 } }
+      }
+    });
   </script>
 </body>
 </html>
