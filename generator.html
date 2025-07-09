@@ -14,34 +14,38 @@
       --hover: #ffca28;
       --text: #ffffff;
     }
+    * {
+      box-sizing: border-box;
+    }
     body {
       margin: 0;
       padding: 0;
       font-family: 'Poppins', sans-serif;
       min-height: 100vh;
-      overflow-x: hidden; /* Kekal untuk buang overflow */
+      overflow-x: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 100vw; /* Pastikan body penuh lebar skrin */
+      width: 100vw;
+      position: relative;
     }
     #particles-js {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100vw; /* Pastikan cover lebar penuh */
-      height: 100vh; /* Pastikan cover tinggi penuh */
+      width: 100vw;
+      height: 100vh;
       background: linear-gradient(135deg, #1a237e, #4a148c);
       background-size: 200% 200%;
       animation: gradientShift 10s ease infinite;
-      z-index: -1; /* Letak di belakang semua elemen */
+      z-index: -1;
     }
     @keyframes gradientShift {
       0%, 100% { background-position: 0% 0%; }
       50% { background-position: 100% 100%; }
     }
     h1 {
-      font-size: 2.5em; /* Kekal besar */
+      font-size: 2.5em;
       text-align: center;
       display: flex;
       align-items: center;
@@ -49,10 +53,10 @@
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
       color: var(--text);
       animation: fadeIn 1s forwards;
-      margin: 20px 0;
+      margin: 10px 0; /* Reduce margin slightly */
     }
     h1 img {
-      height: 50px; /* Kekal besar */
+      height: 50px;
       width: auto;
       cursor: pointer;
       animation: fadeIn 1s 0.2s forwards;
@@ -61,11 +65,10 @@
       background: rgba(255, 255, 255, 0.1);
       padding: 20px;
       border-radius: 15px;
-      width: 100%;
+      width: 90%;
       max-width: 400px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
       animation: fadeIn 1s 0.4s forwards;
-      box-sizing: border-box; /* Pastikan padding tak tambah lebar */
     }
     input[type="number"], button {
       padding: 12px;
@@ -110,6 +113,15 @@
       background: var(--hover);
       transform: translateY(-2px);
     }
+    #offHistoryBtn {
+      background: #f57c00;
+      color: #fff;
+      margin-top: 10px;
+    }
+    #offHistoryBtn:hover {
+      background: #ff9800;
+      transform: translateY(-2px);
+    }
     .checkbox-container {
       display: flex;
       flex-direction: column;
@@ -143,6 +155,7 @@
       max-height: 150px;
       overflow-y: auto;
       color: var(--text);
+      display: block; /* Ensure visible by default */
     }
     #history ul {
       list-style: none;
@@ -163,7 +176,8 @@
       color: var(--accent);
       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
       animation: fadeIn 1s 0.8s forwards;
-      box-sizing: border-box; /* Pastikan padding tak tambah lebar */
+      width: 90%;
+      max-width: 400px;
     }
     .social-links {
       margin-top: 10px;
@@ -203,8 +217,8 @@
     META MATIK
   </h1>
   <div class="container">
-    <input type="number" id="min" placeholder="Min Number" value="1">
-    <input type="number" id="max" placeholder="Max Number" value="30">
+    <input type="number" id="min" placeholder="Min Number" value="50"> <!-- Ubah default min ke 50 -->
+    <input type="number" id="max" placeholder="Max Number" value="50"> <!-- Ubah default max ke 50 -->
     <div class="checkbox-container">
       <label><input type="checkbox" id="leftRight" checked> Kiri/Kanan</label>
       <label><input type="checkbox" id="upDown" checked> Atas/Bawah</label>
@@ -212,6 +226,7 @@
     </div>
     <button onclick="generate()">Generate!</button>
     <button id="resetBtn" onclick="resetAll()">Reset</button>
+    <button id="offHistoryBtn" onclick="toggleHistory()">Off History</button> <!-- Tambah butang off history -->
     <div id="result">-</div>
     <div id="history"><ul><li>History: None</li></ul></div>
   </div>
@@ -226,12 +241,15 @@
 
   <script>
     let history = [];
+    let historyEnabled = true; // State untuk toggle history
+
     function showPopup() {
       document.getElementById('popupSound').play().catch(function(error) {
         console.log("Audio play failed:", error);
       });
       alert("KUMPAU KE TU");
     }
+
     function generate() {
       let min = parseInt(document.getElementById('min').value);
       let max = parseInt(document.getElementById('max').value);
@@ -269,10 +287,12 @@
         historyParts.push(`Warna: ${color}`);
       }
       let result = resultParts.join(', ');
-      let historyEntry = historyParts.join(', ');
       document.getElementById('result').innerText = result;
-      updateHistory(historyEntry);
+      if (historyEnabled) {
+        updateHistory(historyParts.join(', '));
+      }
     }
+
     function updateHistory(result) {
       history.unshift(result);
       if (history.length > 5) history.pop();
@@ -281,16 +301,33 @@
         : '<li>History: None</li>';
       document.getElementById('history').innerHTML = `<ul>${historyList}</ul>`;
     }
+
     function resetAll() {
       history = [];
       document.getElementById('result').innerText = '-';
       document.getElementById('history').innerHTML = '<ul><li>History: None</li></ul>';
-      document.getElementById('min').value = '1';
-      document.getElementById('max').value = '30';
+      document.getElementById('min').value = '50';
+      document.getElementById('max').value = '50';
       document.getElementById('leftRight').checked = true;
       document.getElementById('upDown').checked = true;
       document.getElementById('color').checked = true;
     }
+
+    function toggleHistory() {
+      historyEnabled = !historyEnabled;
+      const button = document.getElementById('offHistoryBtn');
+      if (!historyEnabled) {
+        history = [];
+        document.getElementById('history').innerHTML = '<ul><li>History: Off</li></ul>';
+        button.textContent = 'On History';
+        button.style.background = '#4caf50'; // Green for On
+      } else {
+        document.getElementById('history').innerHTML = '<ul><li>History: None</li></ul>';
+        button.textContent = 'Off History';
+        button.style.background = '#f57c00'; // Orange for Off
+      }
+    }
+
     particlesJS({
       particles: {
         number: { value: 50, density: { enable: true, value_area: 800 } },
