@@ -53,7 +53,7 @@
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
       color: var(--text);
       animation: fadeIn 1s forwards;
-      margin: 10px 0; /* Reduce margin slightly */
+      margin: 10px 0;
     }
     h1 img {
       height: 50px;
@@ -155,7 +155,7 @@
       max-height: 150px;
       overflow-y: auto;
       color: var(--text);
-      display: block; /* Ensure visible by default */
+      display: block;
     }
     #history ul {
       list-style: none;
@@ -217,8 +217,8 @@
     META MATIK
   </h1>
   <div class="container">
-    <input type="number" id="min" placeholder="Min Number" value="50"> <!-- Ubah default min ke 50 -->
-    <input type="number" id="max" placeholder="Max Number" value="50"> <!-- Ubah default max ke 50 -->
+    <input type="number" id="min" placeholder="Min Number" value="1"> <!-- Ubah default min ke 1 -->
+    <input type="number" id="max" placeholder="Max Number" value="50"> <!-- Kekal max ke 50 -->
     <div class="checkbox-container">
       <label><input type="checkbox" id="leftRight" checked> Kiri/Kanan</label>
       <label><input type="checkbox" id="upDown" checked> Atas/Bawah</label>
@@ -226,7 +226,7 @@
     </div>
     <button onclick="generate()">Generate!</button>
     <button id="resetBtn" onclick="resetAll()">Reset</button>
-    <button id="offHistoryBtn" onclick="toggleHistory()">Off History</button> <!-- Tambah butang off history -->
+    <button id="offHistoryBtn" onclick="toggleHistory()">Off History</button>
     <div id="result">-</div>
     <div id="history"><ul><li>History: None</li></ul></div>
   </div>
@@ -241,7 +241,7 @@
 
   <script>
     let history = [];
-    let historyEnabled = true; // State untuk toggle history
+    let historyEnabled = true;
 
     function showPopup() {
       document.getElementById('popupSound').play().catch(function(error) {
@@ -306,8 +306,8 @@
       history = [];
       document.getElementById('result').innerText = '-';
       document.getElementById('history').innerHTML = '<ul><li>History: None</li></ul>';
-      document.getElementById('min').value = '50';
-      document.getElementById('max').value = '50';
+      document.getElementById('min').value = '1';  <!-- Ubah default min ke 1 -->
+      document.getElementById('max').value = '50'; <!-- Kekal max ke 50 -->
       document.getElementById('leftRight').checked = true;
       document.getElementById('upDown').checked = true;
       document.getElementById('color').checked = true;
@@ -320,11 +320,11 @@
         history = [];
         document.getElementById('history').innerHTML = '<ul><li>History: Off</li></ul>';
         button.textContent = 'On History';
-        button.style.background = '#4caf50'; // Green for On
+        button.style.background = '#4caf50';
       } else {
         document.getElementById('history').innerHTML = '<ul><li>History: None</li></ul>';
         button.textContent = 'Off History';
-        button.style.background = '#f57c00'; // Orange for Off
+        button.style.background = '#f57c00';
       }
     }
 
