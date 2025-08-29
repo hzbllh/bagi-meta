@@ -1,347 +1,283 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ms">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>META MATIK - Generator</title>
-  <meta name="description" content="META MATIK: Random number and direction generator for gaming">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js">
-  <style>
-    :root {
-      --bg: #1a237e;
-      --accent: #ffd700;
-      --hover: #ffca28;
-      --text: #ffffff;
-    }
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Poppins', sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100vw;
-      position: relative;
-    }
-    #particles-js {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: linear-gradient(135deg, #1a237e, #4a148c);
-      background-size: 200% 200%;
-      animation: gradientShift 10s ease infinite;
-      z-index: -1;
-    }
-    @keyframes gradientShift {
-      0%, 100% { background-position: 0% 0%; }
-      50% { background-position: 100% 100%; }
-    }
-    h1 {
-      font-size: 2.5em;
-      text-align: center;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-      color: var(--text);
-      animation: fadeIn 1s forwards;
-      margin: 10px 0;
-    }
-    h1 img {
-      height: 50px;
-      width: auto;
-      cursor: pointer;
-      animation: fadeIn 1s 0.2s forwards;
-    }
-    .container {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 20px;
-      border-radius: 15px;
-      width: 90%;
-      max-width: 400px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-      animation: fadeIn 1s 0.4s forwards;
-    }
-    input[type="number"], button {
-      padding: 12px;
-      margin: 10px 0;
-      font-size: 1em;
-      width: 100%;
-      box-sizing: border-box;
-      border: none;
-      border-radius: 5px;
-      transition: all 0.3s;
-    }
-    input[type="number"] {
-      background: #fff;
-      color: var(--bg);
-    }
-    button {
-      background: var(--accent);
-      color: var(--bg);
-      cursor: pointer;
-      font-weight: bold;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-    }
-    button:hover {
-      background: var(--hover);
-      transform: translateY(-2px);
-    }
-    #resetBtn {
-      background: #b71c1c;
-      color: #fff;
-    }
-    #resetBtn:hover {
-      background: #d32f2f;
-      transform: translateY(-2px);
-    }
-    #backBtn {
-      background: var(--accent);
-      color: var(--bg);
-      margin-top: 20px;
-      animation: fadeIn 1s 0.6s forwards;
-    }
-    #backBtn:hover {
-      background: var(--hover);
-      transform: translateY(-2px);
-    }
-    #offHistoryBtn {
-      background: #f57c00;
-      color: #fff;
-      margin-top: 10px;
-    }
-    #offHistoryBtn:hover {
-      background: #ff9800;
-      transform: translateY(-2px);
-    }
-    .checkbox-container {
-      display: flex;
-      flex-direction: column;
-      margin: 10px 0;
-    }
-    .checkbox-container label {
-      color: var(--text);
-      font-size: 0.9em;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-    }
-    input[type="checkbox"] {
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-    }
-    #result {
-      font-size: 2em;
-      margin: 20px 0;
-      color: var(--text);
-      animation: fadeIn 0.5s 0.5s forwards;
-      text-align: center;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    }
-    #history {
-      font-size: 0.9em;
-      text-align: left;
-      width: 100%;
-      max-height: 150px;
-      overflow-y: auto;
-      color: var(--text);
-      display: block;
-    }
-    #history ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    #history li {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 8px;
-      margin: 5px 0;
-      border-radius: 5px;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-    }
-    #footer {
-      margin-top: auto;
-      padding: 20px;
-      text-align: center;
-      color: var(--accent);
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-      animation: fadeIn 1s 0.8s forwards;
-      width: 90%;
-      max-width: 400px;
-    }
-    .social-links {
-      margin-top: 10px;
-      display: flex;
-      gap: 15px;
-      justify-content: center;
-    }
-    .social-links img {
-      width: 24px;
-      height: 24px;
-      transition: transform 0.3s;
-    }
-    .social-links img:hover { transform: scale(1.2); }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    @media (max-width: 600px) {
-      h1 { font-size: 1.5em; }
-      h1 img { height: 35px; }
-      .container { padding: 15px; }
-      #result { font-size: 1.5em; }
-      #footer { font-size: 0.8em; }
-      .social-links img { width: 20px; height: 20px; }
-    }
-    @media (max-width: 400px) {
-      h1 { font-size: 1.2em; }
-      h1 img { height: 30px; }
-      #result { font-size: 1.2em; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>META MATIK - Ranking</title>
+    <meta name="description" content="META MATIK: Sort and rank numbers with custom highlights">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #1a237e;
+            --accent: #ffd700;
+            --hover: #ffca28;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a237e, #4a148c);
+            background-size: 200% 200%;
+            animation: gradientShift 10s ease infinite;
+            z-index: -1;
+        }
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+        }
+        h2 {
+            font-size: 2em;
+            text-align: center;
+            margin: 0;
+            color: var(--accent);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 1s forwards 0.2s;
+            position: relative;
+            z-index: 1;
+        }
+        p, label {
+            font-size: 1em;
+            margin: 10px 0;
+            color: var(--accent);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        textarea, input[type="text"], select {
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 1em;
+            width: 100%;
+            box-sizing: border-box;
+            border: none wokół: 5px;
+            background: #fff;
+            color: var(--bg);
+        }
+        button {
+            background: var(--accent);
+            color: var(--bg);
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 1em;
+            width: 100%;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background: var(--hover);
+        }
+        #resetBtn {
+            background: #b71c1c;
+            color: #fff;
+        }
+        #resetBtn:hover {
+            background: #d32f2f;
+        }
+        #backBtn {
+            background: var(--accent);
+            color: var(--bg);
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeIn 1s forwards 0.4s;
+        }
+        #backBtn:hover {
+            background: var(--hover);
+        }
+        #result {
+            margin: 20px 0;
+            text-align: left;
+        }
+        #result h3 {
+            font-size: 1.2em;
+            margin: 10px 0;
+            color: var(--accent);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        #result ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        #result li {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+            color: var(--accent);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        #result p {
+            margin: 10px 0;
+            color: var(--hover);
+        }
+        #footer {
+            margin-top: auto;
+            padding: 20px;
+            font-size: 1em;
+            color: var(--accent);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 1s forwards 0.6s;
+            position: relative;
+            z-index: 1;
+        }
+        .social-links {
+            margin-top: 10px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        .social-links img {
+            width: 24px;
+            height: 24px;
+            transition: transform 0.3s;
+        }
+        .social-links img:hover {
+            transform: rotate(360deg) scale(1.2);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @media (max-width: 600px) {
+            h2 { font-size: 1.3em; }
+            .container { padding: 15px; }
+            textarea, input[type="text"], select, button { font-size: 0.9em; }
+            #result h3 { font-size: 1em; }
+            #footer { font-size: 0.8em; }
+            .social-links img { width: 20px; height: 20px; }
+        }
+        @media (max-width: 400px) {
+            h2 { font-size: 1em; }
+            #result h3 { font-size: 0.9em; }
+        }
+    </style>
 </head>
 <body>
-  <div id="particles-js"></div>
-  <h1>
-    <img src="https://raw.githubusercontent.com/hzbllh/bagi-meta/refs/heads/main/a666a618-e5e2-49ff-a104-b18e34af2fe5_removalai_preview.png" alt="META MATIK Logo" onclick="showPopup()">
-    META MATIK
-  </h1>
-  <div class="container">
-    <input type="number" id="min" placeholder="Min Number" value="1">
-    <input type="number" id="max" placeholder="Max Number" value="50">
-    <div class="checkbox-container">
-      <label><input type="checkbox" id="leftRight"> Kiri/Kanan</label> <!-- Default off -->
-      <label><input type="checkbox" id="upDown"> Atas/Bawah</label> <!-- Default off -->
-      <label><input type="checkbox" id="color"> Rumah Sukan</label> <!-- Default off -->
+    <div id="particles-js"></div>
+    <h2>Susun Nombor</h2>
+    <div class="container">
+        <p>Masukkan nombor (satu setiap baris):</p>
+        <textarea id="inputNumbers" rows="5" cols="30" placeholder="Contoh:
+615
+831
+164
+944"></textarea>
+        <br>
+        <label for="sortOrder">Pilih urutan:</label>
+        <select id="sortOrder">
+            <option value="ascending">Menaik (Kecil ke Besar)</option>
+            <option value="descending">Menurun (Besar ke Kecil)</option>
+        </select>
+        <br>
+        <label for="highlightPositions">Pilih kedudukan untuk ditanda (pisahkan dengan koma, contoh: 1, 3):</label>
+        <input type="text" id="highlightPositions" placeholder="Contoh: 1, 3">
+        <br>
+        <button onclick="sortNumbers()">Susun Nombor</button>
+        <button id="resetBtn" onclick="resetForm()">Reset</button>
+        <div id="result"></div>
     </div>
-    <button onclick="generate()">Generate!</button>
-    <button id="resetBtn" onclick="resetAll()">Reset</button>
-    <button id="offHistoryBtn" onclick="toggleHistory()">Off History</button>
-    <div id="result">-</div>
-    <div id="history"><ul><li>History: Off</li></ul></div> <!-- Default history off -->
-  </div>
-  <a href="index.html"><button id="backBtn">Kembali ke Halaman Utama</button></a>
-  <div id="footer">
-    SEMOGA NISMA NISMA
-    <div class="social-links">
-      <a href="https://www.tiktok.com/@kc._.collecti0n?_t=ZS-8w5A2jjiboI&_r=1" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok"></a>
+    <a href="index.html"><button id="backBtn">Kembali ke Halaman Utama</button></a>
+    <div id="footer">
+        SEMOGA NISMA NISMA
+        <div class="social-links">
+            <a href="https://www.tiktok.com/@kc._.collecti0n?_t=ZS-8w5A2jjiboI&_r=1" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok"></a>
+        </div>
     </div>
-  </div>
-  <audio id="popupSound" src="https://freesound.org/data/previews/258/258111_2046502-lq.mp3"></audio>
 
-  <script>
-    let history = [];
-    let historyEnabled = false; // Default history off
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS({
+            particles: {
+                number: { value: 50, density: { enable: true, value_area: 800 } },
+                color: { value: "#ffd700" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                move: { enable: true, speed: 2, direction: "none", random: true }
+            },
+            interactivity: {
+                events: { onhover: { enable: true, mode: "repulse" } },
+                modes: { repulse: { distance: 100, duration: 0.4 } }
+            }
+        });
 
-    function showPopup() {
-      document.getElementById('popupSound').play().catch(function(error) {
-        console.log("Audio play failed:", error);
-      });
-      alert("KUMPAU KE TU");
-    }
+        function sortNumbers() {
+            const input = document.getElementById('inputNumbers').value;
+            const sortOrder = document.getElementById('sortOrder').value;
+            const highlightInput = document.getElementById('highlightPositions').value;
+            const numbers = input.split('\n')
+                                .map(num => parseFloat(num.trim()))
+                                .filter(num => !isNaN(num));
 
-    function generate() {
-      let min = parseInt(document.getElementById('min').value);
-      let max = parseInt(document.getElementById('max').value);
-      if (isNaN(min) || isNaN(max)) {
-        alert("Sila masukkan nombor yang sah!");
-        return;
-      }
-      if (min >= max) {
-        alert("Max harus lebih besar dari Min!");
-        return;
-      }
-      let number = Math.floor(Math.random() * (max - min + 1)) + min;
-      let leftRight = document.getElementById('leftRight').checked
-        ? Math.random() < 0.5 ? 'Kiri' : 'Kanan'
-        : null;
-      let upDown = document.getElementById('upDown').checked
-        ? Math.random() < 0.5 ? 'Atas' : 'Bawah'
-        : null;
-      const colors = ['Merah', 'Biru', 'Hijau', 'Kuning'];
-      let color = document.getElementById('color').checked
-        ? colors[Math.floor(Math.random() * colors.length)]
-        : null;
-      let resultParts = [number];
-      let historyParts = [`Nombor: ${number}`];
-      if (leftRight) {
-        resultParts.push(leftRight);
-        historyParts.push(`Arah: ${leftRight}`);
-      }
-      if (upDown) {
-        resultParts.push(upDown);
-        historyParts.push(upDown);
-      }
-      if (color) {
-        resultParts.push(color);
-        historyParts.push(`Warna: ${color}`);
-      }
-      let result = resultParts.join(', ');
-      document.getElementById('result').innerText = result;
-      if (historyEnabled) {
-        updateHistory(historyParts.join(', '));
-      }
-    }
+            if (numbers.length === 0) {
+                document.getElementById('result').innerHTML = '<p style="color: var(--hover);">Sila masukkan sekurang-kurangnya satu nombor yang sah.</p>';
+                return;
+            }
 
-    function updateHistory(result) {
-      history.unshift(result);
-      if (history.length > 5) history.pop();
-      let historyList = history.length > 0
-        ? history.map(item => `<li>${item}</li>`).join('')
-        : '<li>History: None</li>';
-      document.getElementById('history').innerHTML = `<ul>${historyList}</ul>`;
-    }
+            const sortedNumbers = [...numbers].sort((a, b) => 
+                sortOrder === 'ascending' ? a - b : b - a
+            );
 
-    function resetAll() {
-      history = [];
-      document.getElementById('result').innerText = '-';
-      document.getElementById('history').innerHTML = '<ul><li>History: Off</li></ul>'; // Default history off
-      document.getElementById('min').value = '1';
-      document.getElementById('max').value = '50';
-      document.getElementById('leftRight').checked = false; // Default off
-      document.getElementById('upDown').checked = false;    // Default off
-      document.getElementById('color').checked = false;     // Default off
-    }
+            const highlightPositions = highlightInput
+                .split(',')
+                .map(pos => parseInt(pos.trim()))
+                .filter(pos => !isNaN(pos));
 
-    function toggleHistory() {
-      historyEnabled = !historyEnabled;
-      const button = document.getElementById('offHistoryBtn');
-      if (!historyEnabled) {
-        history = [];
-        document.getElementById('history').innerHTML = '<ul><li>History: Off</li></ul>';
-        button.textContent = 'On History';
-        button.style.background = '#4caf50';
-      } else {
-        document.getElementById('history').innerHTML = '<ul><li>History: None</li></ul>';
-        button.textContent = 'Off History';
-        button.style.background = '#f57c00';
-      }
-    }
+            let errorMessage = '';
+            const invalidPositions = highlightPositions.filter(pos => pos < 1 || pos > sortedNumbers.length);
+            if (invalidPositions.length > 0) {
+                errorMessage = `<p style="color: var(--hover);">Kedudukan tidak sah: ${invalidPositions.join(', ')}. Sila pilih antara 1 hingga ${sortedNumbers.length}.</p>`;
+            }
 
-    particlesJS({
-      particles: {
-        number: { value: 50, density: { enable: true, value_area: 800 } },
-        color: { value: "#ffd700" },
-        shape: { type: "circle" },
-        opacity: { value: 0.5, random: true },
-        size: { value: 3, random: true },
-        move: { enable: true, speed: 2, direction: "none", random: true }
-      },
-      interactivity: {
-        events: { onhover: { enable: true, mode: "repulse" } },
-        modes: { repulse: { distance: 100, duration: 0.4 } }
-      }
-    });
-  </script>
+            const numberList = sortedNumbers.map((num, index) => {
+                const position = index + 1;
+                const isHighlighted = highlightPositions.includes(position);
+                return `<li style="${isHighlighted ? 'font-weight: bold; color: var(--hover);' : ''}">${num}${isHighlighted ? ' (Kedudukan ' + position + ')' : ''}</li>`;
+            }).join('');
+
+            const title = sortOrder === 'ascending' 
+                ? 'Utur Menaik (Kecil ke Besar)' 
+                : 'Utur Menurun (Besar ke Kecil)';
+
+            document.getElementById('result').innerHTML = `
+                ${errorMessage}
+                <h3>${title}:</h3>
+                <ul>${numberList}</ul>
+            `;
+        }
+
+        function resetForm() {
+            document.getElementById('inputNumbers').value = '';
+            document.getElementById('sortOrder').value = 'ascending';
+            document.getElementById('highlightPositions').value = '';
+            document.getElementById('result').innerHTML = '';
+        }
+    </script>
 </body>
-</html>
+          </html>
