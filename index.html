@@ -9,9 +9,9 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js">
   <style>
     :root {
-      --bg: #ffffff; /* Background putih */
-      --accent: #000000; /* Tulisan hitam */
-      --hover: #666666; /* Hover abu-abu gelap */
+      --bg: #1a237e;
+      --accent: #ffd700;
+      --hover: #ffca28;
     }
     body {
       margin: 0;
@@ -19,13 +19,18 @@
       font-family: 'Poppins', sans-serif;
       min-height: 100vh;
       overflow-x: hidden;
-      background: var(--bg); /* Pastikan latar putih */
     }
     #particles-js {
       position: fixed;
       width: 100%;
       height: 100%;
-      background: var(--bg); /* Latar putih */
+      background: linear-gradient(135deg, #1a237e, #4a148c);
+      background-size: 200% 200%;
+      animation: gradientShift 10s ease infinite;
+    }
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 0%; }
+      50% { background-position: 100% 100%; }
     }
     .hero {
       text-align: center;
@@ -45,13 +50,13 @@
     .hero h1 {
       font-size: 2.5em;
       margin: 0;
-      color: var(--accent); /* Tulisan hitam */
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Bayangan hitam ringan */
+      color: var(--accent);
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
       animation: fadeIn 1s 0.4s forwards;
     }
     .hero button {
-      background: var(--accent); /* Latar hitam untuk butang */
-      color: var(--bg); /* Teks putih pada butang */
+      background: var(--accent);
+      color: var(--bg);
       padding: 15px 30px;
       border: none;
       border-radius: 5px;
@@ -65,13 +70,13 @@
       margin-right: auto;
       animation: fadeIn 1s 0.6s forwards;
     }
-    .hero button:hover { background: var(--hover); } /* Hover abu-abu gelap */
+    .hero button:hover { background: var(--hover); }
     #footer {
       margin-top: auto;
       padding: 20px;
       text-align: center;
-      color: var(--accent); /* Tulisan hitam */
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Bayangan hitam ringan */
+      color: var(--accent);
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
       animation: fadeIn 1s 0.8s forwards;
     }
     .social-links {
@@ -84,7 +89,6 @@
       width: 24px;
       height: 24px;
       transition: transform 0.3s;
-      filter: grayscale(100%); /* Ikon hitam putih */
     }
     .social-links img:hover { transform: rotate(360deg) scale(1.2); }
     @keyframes fadeIn {
@@ -108,8 +112,8 @@
 <body>
   <div id="particles-js"></div>
   <section class="hero">
-    <img src="https://raw.githubusercontent.com/hzbllh/bagi-meta/refs/heads/main/1000069909-removebg-preview.png" alt="KC COLLECTION Logo" loading="lazy">
-    <h1>KC COLLECTION</h1>
+    <img src="https://raw.githubusercontent.com/hzbllh/bagi-meta/refs/heads/main/1000069909-removebg-preview.png" alt="ChiiDy Logo" loading="lazy"> <!-- Logo baru -->
+    <h1>ChiiDy sdn. bhd.</h1>
     <a href="generator.html"><button>Meta Matik</button></a>
     <a href="ranking.html"><button>Ranking</button></a>
     <a href="tetris.html"><button>Tetris</button></a>
@@ -126,16 +130,16 @@
   <script>
     particlesJS({
       particles: {
-        number: { value: 0, density: { enable: false, value_area: 0 } }, /* Hilangkan partikel */
-        color: { value: "#000000" },
+        number: { value: 50, density: { enable: true, value_area: 800 } },
+        color: { value: "#ffd700" },
         shape: { type: "circle" },
-        opacity: { value: 0, random: false },
-        size: { value: 0, random: false },
-        move: { enable: false, speed: 0, direction: "none", random: false }
+        opacity: { value: 0.5, random: true },
+        size: { value: 3, random: true },
+        move: { enable: true, speed: 2, direction: "none", random: true }
       },
       interactivity: {
-        events: { onhover: { enable: false, mode: "repulse" } },
-        modes: { repulse: { distance: 0, duration: 0 } }
+        events: { onhover: { enable: true, mode: "repulse" } },
+        modes: { repulse: { distance: 100, duration: 0.4 } }
       }
     });
   </script>
