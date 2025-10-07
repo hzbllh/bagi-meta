@@ -9,9 +9,9 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js">
   <style>
     :root {
-      --bg: #1a237e;
-      --accent: #ffd700;
-      --hover: #ffca28;
+      --bg: #ffffff; /* Background putih */
+      --accent: #000000; /* Teks hitam */
+      --hover: #666666; /* Hover abu-abu gelap */
     }
     body {
       margin: 0;
@@ -19,18 +19,14 @@
       font-family: 'Poppins', sans-serif;
       min-height: 100vh;
       overflow-x: hidden;
+      background: var(--bg); /* Background putih */
     }
     #particles-js {
       position: fixed;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, #1a237e, #4a148c);
-      background-size: 200% 200%;
-      animation: gradientShift 10s ease infinite;
-    }
-    @keyframes gradientShift {
-      0%, 100% { background-position: 0% 0%; }
-      50% { background-position: 100% 100%; }
+      background: var(--bg); /* Background putih */
+      /* Hilangkan gradien dan animasi partikel untuk tema hitam putih */
     }
     .hero {
       text-align: center;
@@ -50,13 +46,13 @@
     .hero h1 {
       font-size: 2.5em;
       margin: 0;
-      color: var(--accent);
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      color: var(--accent); /* Teks hitam */
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Bayangan hitam ringan */
       animation: fadeIn 1s 0.4s forwards;
     }
     .hero button {
-      background: var(--accent);
-      color: var(--bg);
+      background: var(--accent); /* Latar hitam */
+      color: var(--bg); /* Teks putih */
       padding: 15px 30px;
       border: none;
       border-radius: 5px;
@@ -70,13 +66,13 @@
       margin-right: auto;
       animation: fadeIn 1s 0.6s forwards;
     }
-    .hero button:hover { background: var(--hover); }
+    .hero button:hover { background: var(--hover); } /* Hover abu-abu gelap */
     #footer {
       margin-top: auto;
       padding: 20px;
       text-align: center;
-      color: var(--accent);
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+      color: var(--accent); /* Teks hitam */
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Bayangan hitam ringan */
       animation: fadeIn 1s 0.8s forwards;
     }
     .social-links {
@@ -89,6 +85,7 @@
       width: 24px;
       height: 24px;
       transition: transform 0.3s;
+      filter: grayscale(100%); /* Hitam putih untuk ikon */
     }
     .social-links img:hover { transform: rotate(360deg) scale(1.2); }
     @keyframes fadeIn {
@@ -112,8 +109,8 @@
 <body>
   <div id="particles-js"></div>
   <section class="hero">
-    <img src="https://raw.githubusercontent.com/hzbllh/bagi-meta/refs/heads/main/a666a618-e5e2-49ff-a104-b18e34af2fe5_removalai_preview.png" alt="ChiiDy Logo" loading="lazy">
-    <h1>ChiiDy sdn. bhd.</h1>
+    <img src="https://raw.githubusercontent.com/hzbllh/bagi-meta/refs/heads/main/1000069909-removebg-preview.png" alt="KC COLLECTION Logo" loading="lazy"> <!-- Logo baru -->
+    <h1>KC COLLECTION</h1> <!-- Tajuk baru -->
     <a href="generator.html"><button>Meta Matik</button></a>
     <a href="ranking.html"><button>Ranking</button></a>
     <a href="tetris.html"><button>Tetris</button></a>
@@ -130,18 +127,18 @@
   <script>
     particlesJS({
       particles: {
-        number: { value: 50, density: { enable: true, value_area: 800 } },
-        color: { value: "#ffd700" },
+        number: { value: 0, density: { enable: false, value_area: 0 } }, /* Hilangkan partikel */
+        color: { value: "#000000" },
         shape: { type: "circle" },
-        opacity: { value: 0.5, random: true },
-        size: { value: 3, random: true },
-        move: { enable: true, speed: 2, direction: "none", random: true }
+        opacity: { value: 0, random: false },
+        size: { value: 0, random: false },
+        move: { enable: false, speed: 0, direction: "none", random: false }
       },
       interactivity: {
-        events: { onhover: { enable: true, mode: "repulse" } },
-        modes: { repulse: { distance: 100, duration: 0.4 } }
+        events: { onhover: { enable: false, mode: "repulse" } },
+        modes: { repulse: { distance: 0, duration: 0 } }
       }
     });
   </script>
 </body>
-</html>
+  </html>
