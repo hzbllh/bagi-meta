@@ -10,7 +10,7 @@
   <style>
     :root {
       --bg: #ffffff; /* Background putih */
-      --accent: #000000; /* Teks hitam */
+      --accent: #000000; /* Tulisan hitam */
       --hover: #666666; /* Hover abu-abu gelap */
     }
     body {
@@ -19,14 +19,13 @@
       font-family: 'Poppins', sans-serif;
       min-height: 100vh;
       overflow-x: hidden;
-      background: var(--bg); /* Background putih */
+      background: var(--bg); /* Pastikan latar putih */
     }
     #particles-js {
       position: fixed;
       width: 100%;
       height: 100%;
-      background: var(--bg); /* Background putih */
-      /* Hilangkan gradien dan animasi partikel untuk tema hitam putih */
+      background: var(--bg); /* Latar putih */
     }
     .hero {
       text-align: center;
@@ -46,13 +45,13 @@
     .hero h1 {
       font-size: 2.5em;
       margin: 0;
-      color: var(--accent); /* Teks hitam */
+      color: var(--accent); /* Tulisan hitam */
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Bayangan hitam ringan */
       animation: fadeIn 1s 0.4s forwards;
     }
     .hero button {
-      background: var(--accent); /* Latar hitam */
-      color: var(--bg); /* Teks putih */
+      background: var(--accent); /* Latar hitam untuk butang */
+      color: var(--bg); /* Teks putih pada butang */
       padding: 15px 30px;
       border: none;
       border-radius: 5px;
@@ -71,7 +70,7 @@
       margin-top: auto;
       padding: 20px;
       text-align: center;
-      color: var(--accent); /* Teks hitam */
+      color: var(--accent); /* Tulisan hitam */
       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Bayangan hitam ringan */
       animation: fadeIn 1s 0.8s forwards;
     }
@@ -85,7 +84,7 @@
       width: 24px;
       height: 24px;
       transition: transform 0.3s;
-      filter: grayscale(100%); /* Hitam putih untuk ikon */
+      filter: grayscale(100%); /* Ikon hitam putih */
     }
     .social-links img:hover { transform: rotate(360deg) scale(1.2); }
     @keyframes fadeIn {
@@ -109,8 +108,8 @@
 <body>
   <div id="particles-js"></div>
   <section class="hero">
-    <img src="https://raw.githubusercontent.com/hzbllh/bagi-meta/refs/heads/main/1000069909-removebg-preview.png" alt="KC COLLECTION Logo" loading="lazy"> <!-- Logo baru -->
-    <h1>KC COLLECTION</h1> <!-- Tajuk baru -->
+    <img src="https://raw.githubusercontent.com/hzbllh/bagi-meta/refs/heads/main/1000069909-removebg-preview.png" alt="KC COLLECTION Logo" loading="lazy">
+    <h1>KC COLLECTION</h1>
     <a href="generator.html"><button>Meta Matik</button></a>
     <a href="ranking.html"><button>Ranking</button></a>
     <a href="tetris.html"><button>Tetris</button></a>
@@ -141,4 +140,4 @@
     });
   </script>
 </body>
-  </html>
+</html>
