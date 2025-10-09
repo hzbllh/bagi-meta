@@ -49,15 +49,12 @@
     }
     .hero img:hover { transform: scale(1.05) rotate(5deg); }
     .hero h1 {
-      font-size: 2.5em;
-      margin: 0;
-      color: var(--text-black); /* Pastikan teks tajuk hitam */
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-      animation: fadeIn 1s 0.4s forwards;
+      /* Buang tajuk, jadi kosongkan */
+      display: none; /* Sembunyikan tajuk KC COLLECTION */
     }
     .hero button {
-      background: var(--accent);
-      color: var(--text-black); /* Pastikan teks butang hitam */
+      background: var(--accent); /* Latar butang kuning */
+      color: var(--text-black); /* Teks butang hitam */
       padding: 15px 30px;
       border: none;
       border-radius: 5px;
@@ -76,7 +73,7 @@
       margin-top: auto;
       padding: 20px;
       text-align: center;
-      color: var(--accent);
+      color: var(--accent); /* Footer kekal kuning */
       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
       animation: fadeIn 1s 0.8s forwards;
     }
@@ -113,8 +110,8 @@
 <body>
   <div id="particles-js"></div>
   <section class="hero">
-    <img src="https://raw.githubusercontent.com/hzbllh/bagi-meta/refs/heads/main/1000069909-removebg-preview.png" alt="ChiiDy Logo" loading="lazy">
-    <h1>KC COLLECTION</h1>
+    <img src="https://raw.githubusercontent.com/hzbllh/bagi-meta/refs/heads/main/1000072360-removebg-preview.png" alt="KC COLLECTION Logo" loading="lazy"> <!-- Logo baru -->
+    <h1>KC COLLECTION</h1> <!-- Tajuk disimpan tapi disembunyikan -->
     <a href="generator.html"><button>Meta Matik</button></a>
     <a href="ranking.html"><button>Ranking</button></a>
     <a href="tetris.html"><button>Tetris</button></a>
