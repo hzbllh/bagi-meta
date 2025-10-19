@@ -1,0 +1,21 @@
+{
+  "name": "META MATIK",
+  "short_name": "META MATIK",
+  "description": "Your ultimate gaming tool for random number, direction generation, and ranking",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#1a237e",
+  "theme_color": "#ffd700",
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/hzbllh/bagi-meta/refs/heads/main/1000069909-removebg-preview.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://raw.githubusercontent.com/hzbllh/bagi-meta/refs/heads/main/1000069909-removebg-preview.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
