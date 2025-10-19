@@ -74,6 +74,23 @@
       animation: fadeIn 1s 0.6s forwards;
     }
     .hero button:hover { background: var(--hover); }
+    #installBtn {
+      background: var(--accent);
+      color: var(--text-black);
+      padding: 15px 30px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 10px 0;
+      width: 200px;
+      display: none; /* Sembunyi dulu, tunjuk bila boleh install */
+      margin-left: auto;
+      margin-right: auto;
+      animation: fadeIn 1s 0.6s forwards;
+    }
+    #installBtn:hover { background: var(--hover); }
     #footer {
       margin-top: auto;
       padding: 20px;
@@ -101,14 +118,14 @@
     @media (max-width: 600px) {
       .hero img { max-width: 240px; }
       .hero h1 { font-size: 1.5em; }
-      .hero button { padding: 10px 20px; width: 150px; font-size: 0.9em; }
+      .hero button, #installBtn { padding: 10px 20px; width: 150px; font-size: 0.9em; }
       #footer { font-size: 0.8em; }
       .social-links img { width: 20px; height: 20px; }
     }
     @media (max-width: 400px) {
       .hero img { max-width: 200px; }
       .hero h1 { font-size: 1.2em; }
-      .hero button { width: 120px; font-size: 0.8em; }
+      .hero button, #installBtn { width: 120px; font-size: 0.8em; }
     }
   </style>
 </head>
@@ -121,6 +138,7 @@
     <a href="ranking.html"><button>Ranking</button></a>
     <a href="tetris.html"><button>Tetris</button></a>
     <a href="snake.html"><button>Snake</button></a>
+    <button id="installBtn">Install META MATIK</button>
   </section>
   <div id="footer">
     SEMOGA NISMA NISMA
@@ -158,6 +176,44 @@
           });
       });
     }
+
+    // Manual Install Button
+    let deferredPrompt;
+    const installBtn = document.getElementById('installBtn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      // Prevent Chrome 76 and later from showing default prompt
+      e.preventDefault();
+      // Stash the event so it can be triggered later
+      deferredPrompt = e;
+      // Show the install button
+      installBtn.style.display = 'block';
+    });
+
+    installBtn.addEventListener('click', () => {
+      // Hide the button after click
+      installBtn.style.display = 'none';
+      // Show the install prompt
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('User accepted the install prompt');
+          } else {
+            console.log('User dismissed the install prompt');
+            // Show button again if dismissed
+            installBtn.style.display = 'block';
+          }
+          deferredPrompt = null;
+        });
+      }
+    });
+
+    // Hide button if already installed
+    window.addEventListener('appinstalled', () => {
+      installBtn.style.display = 'none';
+      console.log('App installed successfully');
+    });
   </script>
 </body>
 </html>
