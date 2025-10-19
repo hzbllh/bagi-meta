@@ -1,4 +1,3 @@
-// sw.js
 const CACHE_NAME = 'meta-matik-v1';
 const urlsToCache = [
   '/',
